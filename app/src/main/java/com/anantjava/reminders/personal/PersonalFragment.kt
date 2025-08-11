@@ -32,7 +32,7 @@ class PersonalFragment: Fragment() {
             Reminders("Phone Password", "Amaterasu", R.drawable.phone_icon),
             Reminders("UPI Pin", "2008", R.drawable.upi_icon),
             Reminders("Bike Lock","1981", R.drawable.bike_icon),
-            Reminders("Metro Card", "", )
+            Reminders("Metro Card", "",R.drawable.metro_card )
         )
 
         val adapter = ItemAdapter(reminders)

@@ -11,12 +11,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp">
+        android:layout_margin="16dp">
 
         <ImageView
             android:id="@+id/item_image_cardview"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -26,8 +26,7 @@
             android:id="@+id/item_heading_cardview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginStart="12dp"
             android:fontFamily="sans-serif-medium"
             android:textColor="@color/grey"
             android:textSize="16sp"

@@ -8,7 +8,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.commit
 import com.anantjava.reminders.databinding.ActivityMainBinding
+import com.anantjava.reminders.family.FamilyFragment
 import com.anantjava.reminders.personal.PersonalFragment
+import com.anantjava.reminders.work.WorkFragment
 import com.google.android.material.navigation.NavigationBarView
 
 class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener {
@@ -33,14 +35,29 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean = when (item.itemId) {
 
-        R.id.personal_icon -> true
-        R.id.work_icon -> true
-        R.id.family_icon -> true
-        else -> false
+    private fun onFamilyClicked(): Boolean {
+        supportFragmentManager.commit { replace(R.id.fragment_container, FamilyFragment()) }
+        return true
     }
 
+    private fun onWorkClicked(): Boolean {
+        supportFragmentManager.commit { replace(R.id.fragment_container, WorkFragment()) }
+        return true
+    }
+
+    private fun onPersonalClicked(): Boolean {
+        supportFragmentManager.commit { replace(R.id.fragment_container, PersonalFragment()) }
+        return true
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+
+        R.id.personal_icon -> onPersonalClicked()
+        R.id.work_icon -> onWorkClicked()
+        R.id.family_icon -> onFamilyClicked()
+        else -> false
+    }
 }
 
 
