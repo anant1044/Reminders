@@ -1,4 +1,4 @@
-package com.anantjava.reminders.personal
+package com.anantjava.reminders.family
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,37 +8,30 @@ import androidx.fragment.app.Fragment
 import com.anantjava.reminders.ItemAdapter
 import com.anantjava.reminders.R
 import com.anantjava.reminders.Reminders
-import com.anantjava.reminders.databinding.FragmentPersonalBinding
+import com.anantjava.reminders.databinding.FragmentFamilyBinding
 
-class PersonalFragment: Fragment() {
-
-    private lateinit var binding: FragmentPersonalBinding
-
+class FamilyFragment: Fragment() {
+    private lateinit var binding: FragmentFamilyBinding
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentPersonalBinding.inflate(inflater, container, false)
+        binding = FragmentFamilyBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val recyclerview = binding.recyclerviewPersonal
+        val recyclerview = binding.recyclerviewFamily
 
         val reminders = arrayOf(
-            Reminders("Phone Password", "Amaterasu", R.drawable.phone_icon),
-            Reminders("UPI Pin", "2008", R.drawable.upi_icon),
-            Reminders("Bike Lock","1981", R.drawable.bike_icon),
-            Reminders("Metro Card", "", )
+            Reminders("Door Lock", "2007", R.drawable.door_lockl),
+            Reminders("Wifi Password", "anant@1044",R.drawable.wifi_pass )
         )
 
         val adapter = ItemAdapter(reminders)
         recyclerview.adapter = adapter
-
     }
-
-
 }

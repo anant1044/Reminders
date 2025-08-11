@@ -1,13 +1,17 @@
 package com.anantjava.reminders
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.commit
 import com.anantjava.reminders.databinding.ActivityMainBinding
+import com.anantjava.reminders.personal.PersonalFragment
+import com.google.android.material.navigation.NavigationBarView
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -23,9 +27,21 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-
+        binding.navigationPanel.setOnItemSelectedListener(this)
+        supportFragmentManager.commit { add(R.id.fragment_container, PersonalFragment()) }
 
 
     }
 
+    override fun onNavigationItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+
+        R.id.personal_icon -> true
+        R.id.work_icon -> true
+        R.id.family_icon -> true
+        else -> false
+    }
+
 }
+
+
+
