@@ -60,6 +60,8 @@ class ItemAdapter(var reminders: Array<Reminders>) :
                     prefs.edit {
                         remove(reminders[position].title)
                     }
+                    holder.info.text = editText.text.toString()
+                    reminders[position] = reminders[position].copy(info = editText.text.toString())
                     dialog.dismiss()
                 }
                 .show()
