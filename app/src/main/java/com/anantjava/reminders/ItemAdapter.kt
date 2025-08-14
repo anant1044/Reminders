@@ -2,7 +2,6 @@ package com.anantjava.reminders
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,14 +9,12 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import androidx.recyclerview.widget.RecyclerView
-import java.io.Serializable
 import androidx.core.content.edit
-import com.anantjava.reminders.family.FamilyFragment
+import androidx.recyclerview.widget.RecyclerView
 
 
-class ItemAdapter(var reminders: Array<Reminders>) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>()  {
-
+class ItemAdapter(var reminders: Array<Reminders>) :
+    RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
 
 
     override fun getItemCount(): Int {
@@ -29,11 +26,11 @@ class ItemAdapter(var reminders: Array<Reminders>) : RecyclerView.Adapter<ItemAd
         viewType: Int
     ): ItemAdapter.ItemViewHolder {
 
-        var view = LayoutInflater.from(parent.context).inflate(R.layout.item_reminders, parent, false)
+        var view =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_reminders, parent, false)
         return ItemViewHolder(view)
 
     }
-
 
 
     @SuppressLint("SuspiciousIndentation")
@@ -41,33 +38,33 @@ class ItemAdapter(var reminders: Array<Reminders>) : RecyclerView.Adapter<ItemAd
 
         val prefs = holder.itemView.context
             .getSharedPreferences("Reminders", Context.MODE_PRIVATE)
-            holder.bind(reminders[position])
+        holder.bind(reminders[position])
 
-            holder.itemView.setOnClickListener {
-                val dialogView = LayoutInflater.from(holder.itemView.context)
-                    .inflate(R.layout.dialog_layout, null)
+        holder.itemView.setOnClickListener {
+            val dialogView = LayoutInflater.from(holder.itemView.context)
+                .inflate(R.layout.dialog_layout, null)
 
-                val editText = dialogView.findViewById<EditText>(R.id.edit_text_input)
+            val editText = dialogView.findViewById<EditText>(R.id.edit_text_input)
 
-                AlertDialog.Builder(holder.itemView.context)
-                    .setTitle("Set Value of Your ${reminders[position].title}")
-                    .setView(dialogView)
-                    .setPositiveButton("OK") { _, _ ->
-                        prefs.edit {
-                            putString(reminders[position].title, editText.text.toString())
-                        }
-                        holder.info.text = editText.text.toString()
-                        reminders[position] = reminders[position].copy(info = editText.text.toString())
+            AlertDialog.Builder(holder.itemView.context)
+                .setTitle("Set Value of Your ${reminders[position].title}")
+                .setView(dialogView)
+                .setPositiveButton("OK") { _, _ ->
+                    prefs.edit {
+                        putString(reminders[position].title, editText.text.toString())
                     }
-                    .setNegativeButton("Clear") { dialog, _ ->
-                        prefs.edit {
-                            remove(reminders[position].title)
-                        }
-                        dialog.dismiss()
+                    holder.info.text = editText.text.toString()
+                    reminders[position] = reminders[position].copy(info = editText.text.toString())
+                }
+                .setNegativeButton("Clear") { dialog, _ ->
+                    prefs.edit {
+                        remove(reminders[position].title)
                     }
-                    .show()
-            }
+                    dialog.dismiss()
+                }
+                .show()
         }
+    }
 
 
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -84,11 +81,6 @@ class ItemAdapter(var reminders: Array<Reminders>) : RecyclerView.Adapter<ItemAd
 
         }
     }
-
-    data class InfoSerialize(
-        val info: String,
-        val filename: String
-    ): Serializable
 
 }
 
