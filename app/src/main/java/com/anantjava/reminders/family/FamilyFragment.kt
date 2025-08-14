@@ -1,5 +1,7 @@
 package com.anantjava.reminders.family
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +13,10 @@ import com.anantjava.reminders.Reminders
 import com.anantjava.reminders.databinding.FragmentFamilyBinding
 
 class FamilyFragment: Fragment() {
+    val prefs: SharedPreferences by lazy {requireActivity().getSharedPreferences("Reminders", Context.MODE_PRIVATE)}
     private lateinit var binding: FragmentFamilyBinding
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -27,8 +32,8 @@ class FamilyFragment: Fragment() {
         val recyclerview = binding.recyclerviewFamily
 
         val reminders = arrayOf(
-            Reminders("Door Lock", "2007", R.drawable.door_lockl),
-            Reminders("Wifi Password", "anant@1044",R.drawable.wifi_pass )
+            Reminders("Door Lock", prefs.getString("Door Lock", "").toString(), R.drawable.door_lockl),
+            Reminders("Wifi Password", prefs.getString("Wifi Password", "").toString(),R.drawable.wifi_pass )
         )
 
         val adapter = ItemAdapter(reminders)

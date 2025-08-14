@@ -1,5 +1,7 @@
 package com.anantjava.reminders.work
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +14,7 @@ import com.anantjava.reminders.databinding.FragmentWorkBinding
 
 class WorkFragment: Fragment() {
     private lateinit var binding: FragmentWorkBinding
+    val prefs: SharedPreferences by lazy {requireActivity().getSharedPreferences("Reminders", Context.MODE_PRIVATE)}
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -27,8 +30,8 @@ class WorkFragment: Fragment() {
         val recyclerview = binding.recyclerviewWork
 
         val reminders = arrayOf(
-            Reminders("Roll NO.", "", R.drawable.roll_student ),
-            Reminders("Student ID", "", R.drawable.student_ic),
+            Reminders("Roll NO.", prefs.getString("Roll NO.", "").toString() , R.drawable.roll_student ),
+            Reminders("Student ID",prefs.getString("Student ID", "").toString() , R.drawable.student_ic),
 
         )
 

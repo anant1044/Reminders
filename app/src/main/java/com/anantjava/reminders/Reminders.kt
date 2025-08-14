@@ -1,6 +1,6 @@
 package com.anantjava.reminders
 
-class Reminders (
+data class Reminders (
 
    var title: String,
     var info: String,
