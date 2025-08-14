@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
 class ItemAdapter(var reminders: Array<Reminders>) :
@@ -24,7 +24,7 @@ class ItemAdapter(var reminders: Array<Reminders>) :
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ItemAdapter.ItemViewHolder {
+    ):ItemViewHolder {
 
         var view =
             LayoutInflater.from(parent.context).inflate(R.layout.item_reminders, parent, false)
@@ -34,7 +34,7 @@ class ItemAdapter(var reminders: Array<Reminders>) :
 
 
     @SuppressLint("SuspiciousIndentation")
-    override fun onBindViewHolder(holder: ItemAdapter.ItemViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
 
         val prefs = holder.itemView.context
             .getSharedPreferences("Reminders", Context.MODE_PRIVATE)
@@ -46,8 +46,7 @@ class ItemAdapter(var reminders: Array<Reminders>) :
 
             val editText = dialogView.findViewById<EditText>(R.id.edit_text_input)
 
-            AlertDialog.Builder(holder.itemView.context)
-                .setTitle("Set Value of Your ${reminders[position].title}")
+            MaterialAlertDialogBuilder(holder.itemView.context)
                 .setView(dialogView)
                 .setPositiveButton("OK") { _, _ ->
                     prefs.edit {
@@ -56,7 +55,8 @@ class ItemAdapter(var reminders: Array<Reminders>) :
                     holder.info.text = editText.text.toString()
                     reminders[position] = reminders[position].copy(info = editText.text.toString())
                 }
-                .setNegativeButton("Clear") { dialog, _ ->
+                .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
+                .setNeutralButton("Clear") { dialog, _ ->
                     prefs.edit {
                         remove(reminders[position].title)
                     }
