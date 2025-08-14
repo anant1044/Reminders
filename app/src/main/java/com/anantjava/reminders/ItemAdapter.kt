@@ -45,6 +45,7 @@ class ItemAdapter(var reminders: Array<Reminders>) :
                 .inflate(R.layout.dialog_layout, null)
 
             val editText = dialogView.findViewById<EditText>(R.id.edit_text_input)
+            editText.setText(prefs.getString("${reminders[position].title}", ""))
 
             MaterialAlertDialogBuilder(holder.itemView.context)
                 .setView(dialogView)
@@ -60,8 +61,8 @@ class ItemAdapter(var reminders: Array<Reminders>) :
                     prefs.edit {
                         remove(reminders[position].title)
                     }
-                    holder.info.text = editText.text.toString()
-                    reminders[position] = reminders[position].copy(info = editText.text.toString())
+                    holder.info.text = ""
+                    reminders[position] = reminders[position].copy(info = "")
                     dialog.dismiss()
                 }
                 .show()
