@@ -1,19 +1,21 @@
 package com.anantjava.reminders
 
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.commit
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.anantjava.reminders.databinding.ActivityMainBinding
 import com.anantjava.reminders.family.FamilyFragment
 import com.anantjava.reminders.personal.PersonalFragment
 import com.anantjava.reminders.work.WorkFragment
-import com.google.android.material.navigation.NavigationBarView
+import com.google.android.material.tabs.TabLayoutMediator
 
-class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener {
+class MainActivity : AppCompatActivity(){
 
     private lateinit var binding: ActivityMainBinding
 
@@ -29,35 +31,29 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             insets
         }
 
-        binding.navigationPanel.setOnItemSelectedListener(this)
-        supportFragmentManager.commit { add(R.id.fragment_container, PersonalFragment()) }
-
-
+        binding.fragmentContainer.adapter = ScreenSlidePagerAdapter(this)
+        TabLayoutMediator(binding.tabLayout, binding.fragmentContainer) { tab, position ->
+          when(position){
+              0 -> {tab.text = "Personal" ; tab.icon = AppCompatResources.getDrawable(this, R.drawable.icons8_personal)}
+              1 -> {tab.text = "Work"; tab.icon = AppCompatResources.getDrawable(this,R.drawable.icons8_work)}
+              else -> {tab.text = "Family"; tab.icon = AppCompatResources.getDrawable(this,R.drawable.icons8_family)}
+          }
+        }.attach()
     }
 
 
-    private fun onFamilyClicked(): Boolean {
-        supportFragmentManager.commit { replace(R.id.fragment_container, FamilyFragment()) }
-        return true
+
+    private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
+        override fun getItemCount(): Int = 3
+
+        override fun createFragment(position: Int): Fragment = when (position) {
+            0 -> PersonalFragment()
+            1 -> WorkFragment()
+            else -> FamilyFragment()
+
+        }
     }
 
-    private fun onWorkClicked(): Boolean {
-        supportFragmentManager.commit { replace(R.id.fragment_container, WorkFragment()) }
-        return true
-    }
-
-    private fun onPersonalClicked(): Boolean {
-        supportFragmentManager.commit { replace(R.id.fragment_container, PersonalFragment()) }
-        return true
-    }
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-
-        R.id.personal_icon -> onPersonalClicked()
-        R.id.work_icon -> onWorkClicked()
-        R.id.family_icon -> onFamilyClicked()
-        else -> false
-    }
 }
 
 

@@ -3,7 +3,7 @@
 
     <item android:id="@+id/personal_icon"
         android:title="Personal"
-        android:icon="@drawable/icons8_lock"/>
+        android:icon="@drawable/icons8_personal"/>
 
     <item android:id="@+id/family_icon"
         android:title="Family"
